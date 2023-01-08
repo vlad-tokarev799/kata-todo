@@ -8,7 +8,12 @@ const TaskList = (props) => {
 
     const taskElems = props.tasks.map(task => {
         return (
-            <Task { ...task } key={task.id} />
+            <Task
+                { ...task }
+                key={task.id}
+                onComplete={() => props.onComplete(task.id)}
+                onDeleted={() => props.onDeleted(task.id)}
+            />
         )
     })
 
