@@ -3,32 +3,87 @@ import { formatDistanceToNow } from 'date-fns'
 
 import './task.css'
 
-const EditField = (props) => {
-    return (<input type="text" className="edit" value={props.description} onChange={() => console.log('')} />)
-}
+export default class Task extends React.Component {
 
-const Task = (props) => {
-    return (
-        <li className={props.status} key={props.id}>
-            <div className="view">
+    state = {
+        taskLabel: this.props.description
+    }
+
+    onTaskEdit = (e) => {
+        this.setState({
+            taskLabel: e.target.value
+        })
+    }
+
+    onSubmitHandler = (e) => {
+        e.preventDefault()
+
+        const {onEditEnd, id} = this.props
+        const {taskLabel} = this.state
+
+        onEditEnd(taskLabel, id)
+    }
+
+    EditField = () => {
+        const {editing} = this.props
+
+        if (editing) {
+            return (<form onSubmit={this.onSubmitHandler}>
                 <input
-                    className="toggle"
-                    type="checkbox"
-                    id={`${props.id}__check`}
-                    onChange={props.onComplete}
+                    type="text"
+                    className="edit"
+                    value={this.state.taskLabel}
+                    onChange={this.onTaskEdit}
                 />
-                <label htmlFor={`${props.id}__check`}>
-                    <span className="description">{props.description}</span>
-                    <span className="created">{ formatDistanceToNow(props.createTime) }</span>
-                </label>
-                <button className="icon icon-edit"></button>
-                <button className="icon icon-destroy" onClick={props.onDeleted}></button>
-            </div>
+            </form>)
+        }
+    }
 
-            { props.status === 'editing' ? <EditField description={props.description} /> : null }
+    render() {
+        const {
+            completed,
+            editing,
+            id,
+            description,
+            createTime,
+            onComplete,
+            onEditStart,
+            onDeleted
+        } = this.props
 
-        </li>
-    )
+        const classNames = [
+            (completed ? 'completed' : ''),
+            (editing ? 'editing' : '')
+        ].join(' ')
+
+        return (
+            <li className={ classNames } key={id}>
+                <div className="view">
+                    <input
+                        className="toggle"
+                        type="checkbox"
+                        id={`${id}__check`}
+                        onChange={onComplete}
+                        checked={completed}
+                    />
+                    <label htmlFor={`${id}__check`}>
+                        <span className="description">{description}</span>
+                        <span className="created">{ formatDistanceToNow(createTime) }</span>
+                    </label>
+                    <button
+                        className="icon icon-edit"
+                        onClick={ onEditStart }
+                    ></button>
+                    <button
+                        className="icon icon-destroy"
+                        onClick={ onDeleted }
+                    ></button>
+                </div>
+
+                { this.EditField() }
+
+            </li>
+        )
+    }
+
 }
-
-export default Task

@@ -13,6 +13,8 @@ const TaskList = (props) => {
                 key={task.id}
                 onComplete={() => props.onComplete(task.id)}
                 onDeleted={() => props.onDeleted(task.id)}
+                onEditStart={() => props.onEditStart(task.id)}
+                onEditEnd={(...args) => props.onEditEnd(...args)}
             />
         )
     })
