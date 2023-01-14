@@ -20,7 +20,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "format": "prettier --write ./src",
+    "format": "prettier ./src --write",
     "prepare": "husky install"
   },
   "eslintConfig": {
@@ -57,7 +57,7 @@
   "lint-staged": {
     "**/*.{js,jsx}": [
       "npm run lint",
-      "prettier --write"
+      "npm run format"
     ]
   }
 }
