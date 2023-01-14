@@ -1,29 +1,48 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from "prop-types"
 
 import Task from "../task"
 
 import './task-list.css'
 
-const TaskList = (props) => {
+export default class TaskList extends Component {
 
-    const taskElems = props.tasks.map(task => {
+    static defaultProps = {
+        tasks: [],
+        onComplete: () => {},
+        onDeleted: () => {},
+        onEditStart: () => {},
+        onEditEnd: () => {},
+    }
+
+    static propTypes = {
+        tasks: PropTypes.array,
+        onComplete: PropTypes.func,
+        onDeleted: PropTypes.func,
+        onEditStart: PropTypes.func,
+        onEditEnd: PropTypes.func,
+    }
+
+    render() {
+        const {tasks, onComplete, onDeleted, onEditStart, onEditEnd} = this.props
+
+        const taskElems = tasks.map(task => {
+            return (
+                <Task
+                    { ...task }
+                    key={task.id}
+                    onComplete={() => onComplete(task.id)}
+                    onDeleted={() => onDeleted(task.id)}
+                    onEditStart={() => onEditStart(task.id)}
+                    onEditEnd={(...args) => onEditEnd(...args)}
+                />
+            )
+        })
+
         return (
-            <Task
-                { ...task }
-                key={task.id}
-                onComplete={() => props.onComplete(task.id)}
-                onDeleted={() => props.onDeleted(task.id)}
-                onEditStart={() => props.onEditStart(task.id)}
-                onEditEnd={(...args) => props.onEditEnd(...args)}
-            />
+            <ul className="todo-list">
+                {taskElems}
+            </ul>
         )
-    })
-
-    return (
-        <ul className="todo-list">
-            {taskElems}
-        </ul>
-    )
+    }
 }
-
-export default TaskList

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 
 import NewTaskForm from "../new-task-form"
 import TaskList from "../task-list/task-list"
@@ -6,9 +6,19 @@ import Footer from "../footer"
 
 import './app.css'
 
-export default class App extends React.Component {
+export default class App extends Component {
 
     lastId = 100
+
+    state = {
+        tasks: [],
+        activeFilter: 'all',
+        filters: [
+            {label: 'All', param: 'all', active: true},
+            {label: 'Active', param: 'active', active: false},
+            {label: 'Completed', param: 'completed', active: false}
+        ]
+    }
 
     createTask = (label) => {
         return {
@@ -20,7 +30,7 @@ export default class App extends React.Component {
         }
     }
 
-    toggleProperty = (arr, id, prop, value) => {
+    toggleProperty = (arr, id, prop) => {
         const elIdx = arr.findIndex(el => el.id === id)
         const el = arr[elIdx]
 
@@ -46,15 +56,6 @@ export default class App extends React.Component {
         } else if (activeFilter === 'active') {
             return tasks.filter(task => !task.completed)
         }
-    }
-
-    state = {
-        tasks: [
-            this.createTask('Complete Task'),
-            this.createTask('Editing task'),
-            this.createTask('Active task')
-        ],
-        activeFilter: 'all'
     }
 
     completeTaskHandler = (id) => {
@@ -110,12 +111,6 @@ export default class App extends React.Component {
         })
     }
 
-    filterHandler = (param) => {
-        this.setState({
-            activeFilter: param
-        })
-    }
-
     onClearActive = () => {
         this.setState((state) => {
             return {
@@ -124,8 +119,24 @@ export default class App extends React.Component {
         })
     }
 
+    filterHandler = (param) => {
+        this.setState((state) => {
+            const filters = state.filters.map(filter => {
+                return {
+                    ...filter,
+                    active: filter.param === param
+                }
+            })
+
+            return {
+                filters,
+                activeFilter: param
+            }
+        })
+    }
+
     render() {
-        const {tasks} = this.state
+        const {tasks, filters} = this.state
         const filteredTasks = this.getFilteredTasks()
         const todoCount = tasks.filter(task => !task.completed).length
 
@@ -147,6 +158,7 @@ export default class App extends React.Component {
                 <Footer
                     todoCount={todoCount}
                     onFilter={this.filterHandler}
+                    filters={filters}
                     onClearActive={this.onClearActive}
                 />
             </section>
