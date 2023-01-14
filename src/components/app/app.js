@@ -6,8 +6,6 @@ import Footer from '../footer';
 
 import './app.css';
 
-// const test = 0;
-
 export default class App extends Component {
   lastId = 100;
 
