@@ -1,21 +1,27 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
+import { selectTasks } from '../../store/slices/tasks-slice';
+import { selectActiveFilter } from '../../store/slices/filter-slice';
 import Task from '../task';
 
 import './task-list.css';
 
-const TaskList = (props) => {
-  const { tasks, onComplete, onDeleted, onEditStart, onEditEnd } = props;
-  const taskElems = tasks.map((task) => (
-    <Task
-      {...task}
-      key={task.id}
-      onComplete={() => onComplete(task.id)}
-      onDeleted={() => onDeleted(task.id)}
-      onEditStart={() => onEditStart(task.id)}
-      onEditEnd={(...args) => onEditEnd(...args)}
-    />
-  ));
+const TaskList = () => {
+  const tasks = useSelector(selectTasks);
+  const activeFilter = useSelector(selectActiveFilter);
+
+  const taskElems = tasks.map((task) => {
+    const taskElem = <Task {...task} key={task.id} />;
+
+    if (activeFilter === 'all') {
+      return taskElem;
+    } else if (activeFilter === 'active') {
+      return !task.completed ? taskElem : null;
+    } else if (activeFilter === 'completed') {
+      return task.completed ? taskElem : null;
+    }
+  });
 
   return <ul className="todo-list">{taskElems}</ul>;
 };

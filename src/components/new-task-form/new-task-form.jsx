@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import './new-task-form.css';
+import { addTask } from '../../store/slices/tasks-slice';
 
-const NewTaskForm = (props) => {
-  const { onTaskCreate } = props;
+const NewTaskForm = () => {
   const [label, setLabel] = useState('');
+  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    onTaskCreate(label);
+    dispatch(addTask(label));
     setLabel('');
   };
 

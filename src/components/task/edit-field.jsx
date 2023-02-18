@@ -2,6 +2,7 @@ import React from 'react';
 
 const EditField = (props) => {
   const { onEditEnd, editing, label, onTaskEdit, id } = props;
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -11,7 +12,7 @@ const EditField = (props) => {
   if (editing) {
     return (
       <form onSubmit={onSubmitHandler}>
-        <input type="text" className="edit" value={label} onChange={onTaskEdit} />
+        <input type="text" className="edit" value={label} onChange={onTaskEdit} autoFocus />
       </form>
     );
   }
