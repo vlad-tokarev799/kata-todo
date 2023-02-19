@@ -20,14 +20,18 @@ const NewTaskForm = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <input
-        className="new-todo"
-        placeholder="What needs to be done?"
-        autoFocus
-        onChange={changeHandler}
-        value={label}
-      />
+    <form className={'new-todo-form'} onSubmit={submitHandler}>
+      {/*<input*/}
+      {/*  className="new-todo"*/}
+      {/*  placeholder="What needs to be done?"*/}
+      {/*  autoFocus*/}
+      {/*  onChange={changeHandler}*/}
+      {/*  value={label}*/}
+      {/*/>*/}
+      <input className="new-todo" placeholder="Task" autoFocus onChange={changeHandler} value={label} />
+      <input className="new-todo-form__timer" placeholder="Min" />
+      <input className="new-todo-form__timer" placeholder="Sec" />
+      <button type={'submit'}></button>
     </form>
   );
 };

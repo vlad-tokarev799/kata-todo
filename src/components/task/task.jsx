@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import './task.css';
 import { editTask, removeTask } from '../../store/slices/tasks-slice';
+import Timer from '../timer/timer';
 
 import EditField from './edit-field';
 
@@ -57,8 +58,9 @@ const Task = (props) => {
       <div className="view">
         <input className="toggle" type="checkbox" id={`${id}__check`} onChange={onCompleteToggle} checked={completed} />
         <label htmlFor={`${id}__check`}>
-          <span className="description">{description}</span>
-          <span className="created">{formattedCreateTime}</span>
+          <span className="title">{description}</span>
+          <Timer />
+          <span className="description">{formattedCreateTime}</span>
         </label>
         <button className="icon icon-edit" onClick={() => setEditing(true)} />
         <button className="icon icon-destroy" onClick={() => dispatch(removeTask(id))} />
