@@ -59,7 +59,7 @@ const Task = (props) => {
         <input className="toggle" type="checkbox" id={`${id}__check`} onChange={onCompleteToggle} checked={completed} />
         <label htmlFor={`${id}__check`}>
           <span className="title">{description}</span>
-          <Timer />
+          <Timer id={id} />
           <span className="description">{formattedCreateTime}</span>
         </label>
         <button className="icon icon-edit" onClick={() => setEditing(true)} />

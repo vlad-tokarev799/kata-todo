@@ -12,7 +12,8 @@ const TaskList = () => {
   const tasks = useSelector(selectTasks);
   const activeFilter = useSelector(selectActiveFilter);
 
-  const taskElems = filterTasks(tasks, activeFilter).map((task) => <Task {...task} key={task.id} />);
+  const filteredTasks = filterTasks(tasks, activeFilter);
+  const taskElems = filteredTasks.map((task) => <Task {...task} key={task.id} />);
 
   return <ul className="todo-list">{taskElems}</ul>;
 };

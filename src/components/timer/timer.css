@@ -1,34 +1,32 @@
 .todo-list li .icon-pause,
 .todo-list li .icon-play {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .todo-list li .icon-play {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .icon-pause:after {
-    content: '⏸';
+  content: '⏸';
 }
 
 .icon-play:after {
-    content: '▶';
+  content: '▶';
 }
 
 .timer {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .timer__time {
-    /*margin-left: 10px;*/
+  /*margin-left: 10px;*/
 }
-
-

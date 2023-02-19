@@ -1,10 +1,8 @@
-let lastId = 100;
-
-export const createTask = (label) => {
+export const createTask = (label, id) => {
   return {
     description: label,
     createTime: Date.now(),
     completed: false,
-    id: lastId++,
+    id,
   };
 };

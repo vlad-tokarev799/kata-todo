@@ -3,7 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createTask } from '../../lib/create-task';
 
 const initialState = {
+  lastId: 100,
   tasks: [],
+  timers: {},
 };
 
 export const tasksSlice = createSlice({
@@ -11,7 +13,15 @@ export const tasksSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action) => {
-      state.tasks = [createTask(action.payload), ...state.tasks];
+      const { label, time } = action.payload;
+      const id = ++state.lastId;
+      const task = createTask(label, id);
+
+      state.tasks = [task, ...state.tasks];
+      state.timers = {
+        ...state.timers,
+        [id]: time,
+      };
     },
     removeTask: (state, action) => {
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
@@ -31,11 +41,22 @@ export const tasksSlice = createSlice({
     setTaskList: (state, action) => {
       state.tasks = action.payload;
     },
+    decreaseTimer: (state, action) => {
+      const id = action.payload;
+      const oldValue = state.timers[id];
+      const newValue = oldValue > 0 ? oldValue - 1 : 0;
+
+      state.timers = {
+        ...state.timers,
+        [id]: newValue,
+      };
+    },
   },
 });
 
-export const { addTask, removeTask, editTask, setTaskList } = tasksSlice.actions;
+export const { addTask, removeTask, editTask, setTaskList, decreaseTimer } = tasksSlice.actions;
 
 export const selectTasks = (state) => state.tasks.tasks;
+export const selectTimers = (state) => state.tasks.timers;
 
 export default tasksSlice.reducer;
