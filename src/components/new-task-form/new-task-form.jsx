@@ -15,10 +15,12 @@ const NewTaskForm = () => {
 
     const time = Number(min) * 60 + Number(sec);
 
-    dispatch(addTask({ label, time }));
-    setLabel('');
-    setMin('');
-    setSec('');
+    if (label && time) {
+      dispatch(addTask({ label, time }));
+      setLabel('');
+      setMin('');
+      setSec('');
+    }
   };
 
   return (
