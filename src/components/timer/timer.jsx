@@ -25,11 +25,13 @@ const Timer = (props) => {
   }, [timers]);
 
   const onStartTimer = () => {
-    const interval = setInterval(() => {
-      dispatch(decreaseTimer(id));
-    }, 1000);
+    if (!intervalID) {
+      const interval = setInterval(() => {
+        dispatch(decreaseTimer(id));
+      }, 1000);
 
-    setIntervalID(interval);
+      setIntervalID(interval);
+    }
   };
 
   const onPauseTimer = () => {
