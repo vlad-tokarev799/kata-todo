@@ -5,8 +5,8 @@ import './timer.css';
 import { decreaseTimer, selectTimers } from '../../store/slices/tasks-slice';
 
 const transformTime = (time) => {
-  const min = Math.trunc(time / 60);
-  const sec = time - min * 60;
+  const min = `${Math.trunc(time / 60)}`.padStart(2, '0');
+  const sec = `${time - min * 60}`.padStart(2, '0');
 
   return `${min}:${sec}`;
 };
